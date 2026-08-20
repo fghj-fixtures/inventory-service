@@ -1,0 +1,20 @@
+version: "1.0"
+service:
+  name: "inventory-service"
+  internal_domain: "inventory.fghj.internal"
+  build:
+    context: "."
+    dockerfile: "Dockerfile"
+  ports:
+    - "8080"
+  env:
+    - DB_HOST=postgres.fghj.internal
+  dependencies:
+    - kind: "infra"
+      name: "postgres"
+      image: "postgres:16"
+      env:
+        - POSTGRES_PASSWORD=devpassword
+        - POSTGRES_DB=inventory
+      ports:
+        - "5432"
